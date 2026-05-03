@@ -4,11 +4,26 @@ export default function App() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const filteredProducts =
-    selectedCategory === "all"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
+
+  /* const searchResult = products.filter((item) =>
+    item.title.toLowerCase().includes(search.toLowerCase()),
+  ); */
+
+  const filteredProducts = products.filter((item) => {
+    const matchingCategory = selectedCategory === "all" || item.category === selectedCategory;
+    const matchingSearch = item.title.toLowerCase().includes(search.toLowerCase());
+
+    return matchingCategory&&matchingSearch;
+  })
+    /* search === ""
+      ? (selectedCategory === "all"
+          ? products
+          : products.filter((product) => product.category === selectedCategory)
+        )
+      : searchResult; */
+
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
@@ -27,15 +42,48 @@ export default function App() {
 
   return (
     <>
-      <Button productCategory = {selectedCategory} onClick={() => setSelectedCategory("all")}>all</Button>
-      <Button productCategory = {selectedCategory} onClick={() => setSelectedCategory("men's clothing")}>
+      <input
+        type="text"
+        placeholder="Search"
+        style={{
+          marginInline: "auto",
+          marginTop: "20px",
+          display: "block",
+          width: "50%",
+        }}
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <br />
+
+      <Button
+        productCategory={selectedCategory}
+        onClick={() => setSelectedCategory("all")}
+      >
+        all
+      </Button>
+      <Button
+        productCategory={selectedCategory}
+        onClick={() => setSelectedCategory("men's clothing")}
+      >
         men's clothing
       </Button>
-      <Button productCategory = {selectedCategory} onClick={() => setSelectedCategory("women's clothing")}>
+      <Button
+        productCategory={selectedCategory}
+        onClick={() => setSelectedCategory("women's clothing")}
+      >
         women's clothing
       </Button>
-      <Button productCategory = {selectedCategory} onClick={() => setSelectedCategory("jewelery")}>jewelery</Button>
-      <Button productCategory = {selectedCategory} onClick={() => setSelectedCategory("electronics")}>
+      <Button
+        productCategory={selectedCategory}
+        onClick={() => setSelectedCategory("jewelery")}
+      >
+        jewelery
+      </Button>
+      <Button
+        productCategory={selectedCategory}
+        onClick={() => setSelectedCategory("electronics")}
+      >
         electronics
       </Button>
 
@@ -54,7 +102,7 @@ function Products({ product }) {
       <img
         src={product.image}
         alt={product.title}
-        style={{ width: "100px", height: "100px", objectFit: "cover" }}
+        style={{ width: "100px", objectFit: "cover" }}
       />
       <div>{product.title}</div>
     </div>
@@ -63,7 +111,17 @@ function Products({ product }) {
 
 function Button({ children, productCategory, onClick }) {
   return (
-    <button style={{ margin: "10px", backgroundColor: productCategory === children ? "red" : "grey", color: productCategory === children ? "white" : "black", border: "none", padding: "10px 20px", borderRadius: "5px" }} onClick={onClick}>
+    <button
+      style={{
+        margin: "10px",
+        backgroundColor: productCategory === children ? "red" : "grey",
+        color: productCategory === children ? "white" : "black",
+        border: "none",
+        padding: "10px 20px",
+        borderRadius: "5px",
+      }}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
