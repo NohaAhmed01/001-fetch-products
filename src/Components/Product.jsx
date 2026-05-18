@@ -1,11 +1,12 @@
 const productCardStyling = {
-  border: "1px solid #000",
+  backgroundColor: '#2b3035',
+  border: "1px solid #343a40",
   borderRadius: "5px",
-  padding: "10px",
+  padding: "32px 20px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  justifyContents: "space-between",
+  justifyContent: "space-evenly",
 };
 
 export default function Product({ product }) {

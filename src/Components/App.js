@@ -8,38 +8,45 @@ const layoutStyling = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  maxWidth: '1280px',
   marginInline: 'auto'
 }
 const productsGridStyling = {
   display: "grid",
-  gridTemplateColumns: 'auto auto auto',
+  gridTemplateColumns: '1fr 1fr 1fr',
+  maxWidth: '1280px',
   gap: "20px",
 }
 
 export default function App() {
   const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  function APIcalling() {
-    useEffect(() => {
-      fetch("https://fakestoreapi.com/products")
-        .then((res) => res.json())
-        .then((data) => {
-          setProducts(data);
-          console.log(data);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setError("Error fetching products");
-          setIsLoading(false);
-        });
-    }, []);
-  }
-  APIcalling();
+  useEffect(function () {
+    async function ProductsFetch() {
+      try {
+        setIsLoading(true);
+        const res = await fetch("https://fakestoreapi.com/products");
+
+        if (!res.ok) throw new Error("An Error occured while fetching");
+
+        const data = await res.json();
+
+        setProducts(data);
+        
+      }
+      catch (err) {
+        setError(err.message);
+        console.error(err.message)
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    ProductsFetch();
+  }, []);
+
 
   function handleSearch(e) {
     setSearch(e.target.value)
@@ -51,25 +58,33 @@ export default function App() {
     return matchingCategory && matchingSearch;
   })
 
+  /* if(search!=="" && !filteredProducts[0]) return <Error message={'no product found'} />  */
+
   const cat = products.map(cat => cat.category)
   cat.unshift("all");
   const uniqueCategories = Array.from(new Set(cat));
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
   return (
 
     <div style={layoutStyling}>
-      <Search search={search} onChange={handleSearch} />
+      <Header>
+        <Search search={search} onChange={handleSearch} />
+      </Header>
       <div>
-        {
+        {!isLoading &&
           uniqueCategories.map((cat, index) =>
             <Button key={index} productCategory={selectedCategory} onClick={() => setSelectedCategory(cat)}>{cat}</Button>
           )
         }
       </div>
       <div style={productsGridStyling}>
-        {filteredProducts.map((product) => (
+        {/* {filteredProducts.map((product) => (
+          <Product product={product} key={product.id} />
+        ))} */}
+        {isLoading && <Loader />}
+        {error && <Error message={error} />}
+        {search!=="" && !filteredProducts[0] && <Error message={'no product found'} />}
+        {!isLoading && !error && filteredProducts.map((product) => (
           <Product product={product} key={product.id} />
         ))}
       </div>
@@ -77,5 +92,18 @@ export default function App() {
   );
 }
 
+function Loader() {
+  return <p style={{gridColumn: '2 / 3'}}>Loading...</p>
+}
 
+function Error({ message }) {
+  return <p style={{gridColumn: '2 / 3'}}>
+    <span>🚨</span> {message}
+  </p>
+}
 
+function Header({ children }) {
+  return <div className="Header">
+    {children}
+  </div>
+}

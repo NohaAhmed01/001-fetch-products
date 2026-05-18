@@ -3,10 +3,13 @@ export default function Search({ search, onChange }) {
     <input
       type="text"
       placeholder="Search"
+      name="searchQuery"
       style={{
-        marginTop: "20px",
-        display: "block",
-        width: "50%",
+        backgroundColor: 'var(--color-text)',
+        padding: '5px 8px',
+        borderRadius: '8px',
+        minWidth: '250px',
+        border: 'none'
       }}
       value={search}
       onChange={onChange}
