@@ -21,3 +21,21 @@
     transform: rotate(360deg);
   }
 }
+@media screen and (max-width: 520px) {
+  .loaderContainer {
+    justify-self: flex-start;
+  }
+  .loader {
+    width: 25px;
+    height: 25px;
+    border-width: 3px;
+  }
+}
+@media screen and (max-width: 375px) {
+  .loaderContainer {
+    justify-self: center;
+  }
+  .loaderContainer {
+    grid-column: 1;
+  }
+}
