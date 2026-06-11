@@ -1,20 +1,23 @@
 # Fetch Products (React)
 
-A small React app that loads products from [Fake Store API](https://fakestoreapi.com/), displays them in a simple grid, and lets you narrow the list by **category** and **title search** at the same time.
+A React storefront app that loads products from the [Fake Store API](https://fakestoreapi.com/), lets you search and filter them, and opens a detailed modal when you view a product.
 
 ## Features
 
-- **Fetch products** from `https://fakestoreapi.com/products` on first load
-- **Loading and error** UI while the request runs or if it fails
-- **Search** — text input filters by product title (case-insensitive)
-- **Category filters** — category buttons are generated from the fetched products (plus an `"all"` option)
-- **Combined filtering** — only products that match the selected category **and** the current search string are shown
-- **Product cards** — image, title, short description preview, and price
+- **Product fetching** — loads all products from `https://fakestoreapi.com/products` on mount, with loading and error handling
+- **Search** — filters products by title (case-insensitive) via a header search input
+- **Category filters** — dynamically generated tabs from the API response, plus an `"all"` option
+- **Combined filtering** — products must match both the selected category and the current search query
+- **Product cards** — image, title, short description preview, price, and a **View Product** button
+- **Modal view** — full product details (title, category, description, price) in a responsive overlay; body scroll is locked while open
+- **UI polish** — dark theme with CSS variables, loading spinner, error messages, header with logo, and fixed footer
+- **Loading and error** — UI handling while the request loads or if it fails.
 
 ## Tech stack
 
 - **React** 19 with Create React App (`react-scripts`)
-- Inline styles for layout; global styles in `src/index.css`
+- Component-scoped CSS files plus global styles and CSS variables in `src/index.css`
+- **Fake Store API** for product data
 
 ## Getting started
 
@@ -38,19 +41,31 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## How it works
 
-- A `useEffect` fetches the products JSON, then updates `products` state (or sets an error).
-- `search` and `selectedCategory` drive `filteredProducts`: each product must match both the selected category (`"all"` shows every category) and the search substring match.
-- Category buttons are built from the unique `category` values found in the API response.
+1. `App.js` fetches products in a `useEffect` using `async/await`, sets loading state, and handles HTTP errors.
+2. `search` and `selectedCategory` state drive `filteredProducts` — each product must match the category filter (`"all"` shows everything) and include the search string in its title.
+3. Unique categories are derived from the fetched data and passed to `FilterTabs`.
+4. Each `Product` card toggles a `ModalView` that shows the full item and prevents background scrolling while open.
 
 ## Project structure
 
-- `src/Components/App.js` — data fetching + state, search input, category buttons, and product grid
-- `src/Components/Product.jsx` — product card UI
-- `src/Components/Search.jsx` — search input UI
-- `src/Components/Button.jsx` — category button UI
-- `src/index.js` — app entry
-- `src/index.css` — base styles
-- `public/` — CRA HTML template and static assets
+```
+src/
+├── index.js                 # React entry point
+├── index.css                # Global theme, layout grid, responsive breakpoints
+└── Components/
+    ├── App.js               # Fetching, filtering, and page layout
+    ├── Header.js            # Top navigation wrapper
+    ├── Logo.js              # App title
+    ├── Footer.js            # Copyright footer
+    ├── Error.js             # Inline error / empty-state message
+    ├── Search/              # Search input
+    ├── FilterTabs/          # Category filter buttons
+    ├── Button/              # Shared button (filters + view product)
+    ├── Product/             # Product card
+    ├── ModalView/           # Product detail modal
+    └── Loader/              # Loading spinner
+public/                      # CRA HTML template and static assets
+```
 
 ## Scripts
 
@@ -60,6 +75,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Possible next steps
 
-- Make the grid responsive (e.g. auto-fit columns) and move inline styles to CSS
-- Add a sort dropdown (price / title) and show rating + category on each card
-- Add pagination / “load more”
+- Close the modal when clicking the overlay or pressing Escape
+- Add sorting (price, title, rating)
+- Show star rating on product cards
+- Add pagination or a “load more” pattern for large catalogs

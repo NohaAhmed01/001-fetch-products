@@ -7,7 +7,6 @@ import Logo from "./Logo";
 import Header from "./Header";
 import Error from "./Error";
 import FilterTabs from "./FilterTabs/FilterTabs";
-import ModalView from "./ModalView/ModalView";
 
 
 export default function App() {
