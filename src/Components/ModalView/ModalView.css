@@ -1,8 +1,186 @@
-.modalView {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+.overlay{
+    position: fixed;
     top: 0;
     left: 0;
-    background-color: #adb5bd9c;
+    bottom: 0;
+    right: 0;
+    background-color: var(--color-semi-red);
+    z-index: 7;
+}
+.modalView {
+    position: fixed;
+    width: 90%;
+    height: 90%;
+    max-width: 1290px;
+    max-height: 950px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--color-text-semi-dark);
+    z-index: 1;
+    padding: 10px;
+    overflow-y: scroll;
+}
+
+.closeBtn {
+    font-size: 36px;
+    position: fixed;
+}
+
+.modalContent {
+    display: flex;
+    gap: 70px;
+    padding: 50px;
+}
+
+.itemImgWrapper {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+}
+
+.itemImgWrapper img {
+    width: 100%;
+    height: 100%;
+}
+
+.itemDetails {
+    color: #000;
+    padding-top: 50px;
+}
+
+.itemTitle {
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.itemCategory {
+    font-size: 28px;
+    font-weight: 500;
+    padding: 10px 0;
+    color: var(--color-background-500);
+}
+
+.itemDescription {
+    font-size: 32px;
+    line-height: 1.5;
+    padding: 20px 0;
+}
+
+.itemPrice {
+    font-size: 28px;
+    font-weight: 600;
+    font-style: italic;
+    padding: 10px 0;
+}
+
+@media screen and (max-width: 780px){
+    .closeBtn {
+        font-size: 32px;
+    }
+    
+    .modalContent {
+        gap: 50px;
+        padding: 40px;
+    }
+    
+    .itemImgWrapper {
+        height: 250px;
+    }
+
+    .itemDetails {
+        padding-top: 40px;
+    }
+    
+    .itemTitle {
+        font-size: 36px;
+    }
+    
+    .itemCategory {
+        font-size: 24px;
+        padding: 8px 0;
+    }
+    
+    .itemDescription {
+        font-size: 26px;
+        padding: 18px 0;
+    }
+    
+    .itemPrice {
+        font-size: 24px;
+        padding: 8px 0;
+    }
+}
+@media screen and (max-width: 520px){
+    .closeBtn {
+        font-size: 28px;
+    }
+    
+    .modalContent {
+        gap: 40px;
+        padding: 30px;
+    }
+    
+    .itemImgWrapper {
+        height: 200px;
+    }
+
+    .itemDetails {
+        padding-top: 30px;
+    }
+    
+    .itemTitle {
+        font-size: 28px;
+    }
+    
+    .itemCategory {
+        font-size: 16px;
+        padding: 6px 0;
+    }
+    
+    .itemDescription {
+        font-size: 18px;
+        padding: 16px 0;
+    }
+    
+    .itemPrice {
+        font-size: 18px;
+        padding: 6px 0;
+    }
+}
+@media screen and (max-width: 375px){
+    .closeBtn {
+        font-size: 22px;
+    }
+    
+    .modalContent {
+        gap: 30px;
+    }
+    
+    .itemImgWrapper {
+        height: 150px;
+    }
+
+    .itemDetails {
+        padding-top: 20px;
+    }
+    
+    .itemTitle {
+        font-size: 22px;
+    }
+    
+    .itemCategory {
+        font-size: 12px;
+        padding: 4px 0;
+    }
+    
+    .itemDescription {
+        font-size: 14px;
+        padding: 14px 0;
+    }
+    
+    .itemPrice {
+        font-size: 14px;
+        padding: 4px 0;
+    }
 }

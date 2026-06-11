@@ -7,6 +7,7 @@ import Logo from "./Logo";
 import Header from "./Header";
 import Error from "./Error";
 import FilterTabs from "./FilterTabs/FilterTabs";
+import ModalView from "./ModalView/ModalView";
 
 
 export default function App() {
@@ -39,7 +40,6 @@ export default function App() {
     }
     ProductsFetch();
   }, []);
-
 
   function handleSearch(e) {
     setSearch(e.target.value)
