@@ -10,7 +10,7 @@ export default function Product({ product }) {
           alt={product.title}
         />
       </div>
-      <div>
+      <div className="textWrapper">
         <h3> {product.title}</h3>
         <p>{product.description.split(" ").slice(0, 10).join(" ")}</p>
         <span>${product.price}</span>

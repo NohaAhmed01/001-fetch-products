@@ -8,14 +8,6 @@ import Header from "./Header";
 import Error from "./Error";
 import FilterTabs from "./FilterTabs/FilterTabs";
 
-const productsGridStyling = {
-  display: "grid",
-  gridTemplateColumns: '1fr 1fr 1fr',
-  maxWidth: '1280px',
-  marginInline: 'auto',
-  gap: "20px",
-  paddingBottom: "100px"
-}
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -73,18 +65,19 @@ export default function App() {
           <Logo />
           <Search search={search} onChange={handleSearch} />
         </Header>
-        <FilterTabs isLoading={isLoading} uniqueCategories={uniqueCategories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-        <div style={productsGridStyling}>
-          {isLoading && <Loader />}
-          {error && <Error message={error} />}
-          {search !== "" && !filteredProducts[0] && <Error message={'no product found'} />}
-          {!isLoading && !error && filteredProducts.map((product) => (
-            <Product product={product} key={product.id} />
-          ))}
+        <div className="mainContent">
+          <FilterTabs isLoading={isLoading} uniqueCategories={uniqueCategories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+          <div className="productsGrid">
+            {isLoading && <Loader />}
+            {error && <Error message={error} />}
+            {search !== "" && !filteredProducts[0] && <Error message={'no product found'} />}
+            {!isLoading && !error && filteredProducts.map((product) => (
+              <Product product={product} key={product.id} />
+            ))}
+          </div>
         </div>
-        <Footer />
       </div>
-
+      <Footer />
     </>
   );
 }

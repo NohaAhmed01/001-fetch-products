@@ -14,16 +14,23 @@ body {
   margin: 0 auto;
   background-color: var(--color-background-100);
   color: var(--color-text);
+  min-height: 100vh;
 }
 
-.Header{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.Header {
   background: var(--color-red-dark);
   padding: 20px;
 }
 
-.logo{
+.navBar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1440px;
+  margin-inline: auto;
+  align-items: center;
+}
+
+.logo {
   font-size: 32px;
   font-weight: bold;
   color: var(--color-text);
@@ -31,17 +38,29 @@ body {
   font-family: "Black Ops One", system-ui;
 }
 
-.viewProductBtn{
+.mainContent{
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 0 80px 100px;
+}
+
+.viewProductBtn {
   width: 100%;
   margin-top: 10px;
 }
 
-.viewProductBtn:hover{
+.viewProductBtn:hover {
   background-color: var(--color-red) !important;
   color: var(--color-text) !important;
 }
 
-.footer{
+.footer {
   background-color: var(--color-red-dark);
   padding: 20px;
   text-align: center;
@@ -49,4 +68,58 @@ body {
   bottom: 0;
   right: 0;
   left: 0;
+}
+
+@media screen and (max-width: 780px) {
+  .Header{
+    padding: 15px;
+  }
+  .logo{
+    font-size: 28px;
+    padding-left: 10px;
+  }
+  .productsGrid{
+    padding:0 20px 80px;
+    gap: 15px;
+  }
+  .footer{
+    padding: 15px;
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 520px) {
+  .Header{
+    padding: 12px;
+  }
+  .logo{
+    font-size: 18px;
+    padding-left: 2px;
+  }
+  .productsGrid{
+    grid-template-columns: 1fr 1fr;
+    padding: 0 15px 60px;
+    gap: 11px;
+  }
+  .footer{
+    padding: 10px;
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 375px) {
+  .Header{
+    padding: 8px;
+  }
+  .logo{
+    font-size: 14px;
+    padding-left: 2px;
+  }
+  .productsGrid{
+    grid-template-columns: 1fr;
+    padding: 0 15px 60px;
+    gap: 11px;
+  }
+  .footer{
+    padding: 10px;
+    font-size: 12px;
+  }
 }

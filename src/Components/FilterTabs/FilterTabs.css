@@ -5,3 +5,22 @@
     gap: 10px;
     padding: 40px;
 }
+
+@media screen and (max-width: 780px) {
+    .filterTabs{
+        padding: 25px;
+        gap: 8px;
+    }
+}
+@media screen and (max-width: 520px) {
+    .filterTabs{
+        padding: 15px;
+        gap: 6px;
+    }
+}
+@media screen and (max-width: 375px) {
+    .filterTabs{
+        padding: 10px;
+        gap: 4px;
+    }
+}
