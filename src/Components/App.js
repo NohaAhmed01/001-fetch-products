@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
-import Button from './Button';
-import Product from "./Product";
-import Search from "./Search";
+import Product from "./Product/Product";
+import Search from "./Search/Search";
+import Footer from "./Footer";
+import Loader from "./Loader/Loader";
+import Logo from "./Logo";
+import Header from "./Header";
+import Error from "./Error";
+import FilterTabs from "./FilterTabs/FilterTabs";
 
-
-const layoutStyling = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  marginInline: 'auto'
-}
 const productsGridStyling = {
   display: "grid",
   gridTemplateColumns: '1fr 1fr 1fr',
   maxWidth: '1280px',
+  marginInline: 'auto',
   gap: "20px",
+  paddingBottom: "100px"
 }
 
 export default function App() {
@@ -27,6 +27,7 @@ export default function App() {
   useEffect(function () {
     async function ProductsFetch() {
       try {
+        setError('');
         setIsLoading(true);
         const res = await fetch("https://fakestoreapi.com/products");
 
@@ -35,7 +36,7 @@ export default function App() {
         const data = await res.json();
 
         setProducts(data);
-        
+
       }
       catch (err) {
         setError(err.message);
@@ -60,50 +61,32 @@ export default function App() {
 
   /* if(search!=="" && !filteredProducts[0]) return <Error message={'no product found'} />  */
 
-  const cat = products.map(cat => cat.category)
-  cat.unshift("all");
+  let cat = products.map(cat => cat.category)
+  cat = ['all', ...cat];
+  //cat.unshift("all");
   const uniqueCategories = Array.from(new Set(cat));
 
   return (
-
-    <div style={layoutStyling}>
-      <Header>
-        <Search search={search} onChange={handleSearch} />
-      </Header>
+    <>
       <div>
-        {!isLoading &&
-          uniqueCategories.map((cat, index) =>
-            <Button key={index} productCategory={selectedCategory} onClick={() => setSelectedCategory(cat)}>{cat}</Button>
-          )
-        }
+        <Header>
+          <Logo />
+          <Search search={search} onChange={handleSearch} />
+        </Header>
+        <FilterTabs isLoading={isLoading} uniqueCategories={uniqueCategories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+        <div style={productsGridStyling}>
+          {isLoading && <Loader />}
+          {error && <Error message={error} />}
+          {search !== "" && !filteredProducts[0] && <Error message={'no product found'} />}
+          {!isLoading && !error && filteredProducts.map((product) => (
+            <Product product={product} key={product.id} />
+          ))}
+        </div>
+        <Footer />
       </div>
-      <div style={productsGridStyling}>
-        {/* {filteredProducts.map((product) => (
-          <Product product={product} key={product.id} />
-        ))} */}
-        {isLoading && <Loader />}
-        {error && <Error message={error} />}
-        {search!=="" && !filteredProducts[0] && <Error message={'no product found'} />}
-        {!isLoading && !error && filteredProducts.map((product) => (
-          <Product product={product} key={product.id} />
-        ))}
-      </div>
-    </div>
+
+    </>
   );
 }
 
-function Loader() {
-  return <p style={{gridColumn: '2 / 3'}}>Loading...</p>
-}
 
-function Error({ message }) {
-  return <p style={{gridColumn: '2 / 3'}}>
-    <span>🚨</span> {message}
-  </p>
-}
-
-function Header({ children }) {
-  return <div className="Header">
-    {children}
-  </div>
-}

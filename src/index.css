@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+
 :root {
   --color-text: #dee2e6;
   --color-text-dark: #adb5bd;
@@ -15,10 +17,36 @@ body {
 }
 
 .Header{
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   background: var(--color-red-dark);
   padding: 20px;
-  margin: 0 0 30px;
+}
+
+.logo{
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--color-text);
+  padding-left: 20px;
+  font-family: "Black Ops One", system-ui;
+}
+
+.viewProductBtn{
+  width: 100%;
+  margin-top: 10px;
+}
+
+.viewProductBtn:hover{
+  background-color: var(--color-red) !important;
+  color: var(--color-text) !important;
+}
+
+.footer{
+  background-color: var(--color-red-dark);
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }

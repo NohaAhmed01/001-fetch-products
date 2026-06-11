@@ -1,0 +1,7 @@
+input[name='searchQuery'] {
+    background-color: var(--color-text);
+    padding: 5px 8px;
+    border-radius: 8px;
+    border: none;
+    font-size: 18px;
+}

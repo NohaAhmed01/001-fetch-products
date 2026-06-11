@@ -1,18 +1,16 @@
-export default function Button({ children, productCategory, onClick }) {
+import "./Button.css";
+
+export default function Button({ className, children, productCategory, onClick }) {
     return (
       <button
+        className={`btn ${className}`}
         style={{
-          margin: "10px",
           backgroundColor: productCategory === children ? "var(--color-red)" : "var(--color-text-dark)",
           color: productCategory === children ? "white" : "black",
-          border: "none",
-          padding: "10px 20px",
-          borderRadius: "5px",
-          fontSize: "18px"
         }}
         onClick={onClick}
       >
-        {children}
+        {children.charAt(0).toUpperCase() + children.slice(1)}
       </button>
     );
   }
